@@ -91,8 +91,6 @@ while count <= records:
     if(len(info)==0):
         break
 
-    ##print('Retrieved',len(info),'records.')
-
     for item in info:
         
         county = item['countyname']

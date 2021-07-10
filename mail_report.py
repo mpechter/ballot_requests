@@ -27,18 +27,25 @@ def count_by_Party():
     parties_dic = {}
     parties_list = []
 
+#Add the party to both the dictionary and the list. 
     for party in cur.execute(sqlstr):
         parties_dic[party[0]] = 0
         parties_list.append(party[0])
     
     sqlstr = '''SELECT Parties.name from Parties join Requests on Requests.party_id = Parties.id'''
 
+#Here we execute another cursor. 
+#When you encounter a party, add to that party's count in the dictionary. 
     for line in cur.execute(sqlstr):
         parties_dic[line[0]] = parties_dic[line[0]] + 1
 
     count = 0
 
     sorted_parties = []
+
+#Now, using that parties_list, we can easily iterate and grab the information from the dictionary.
+#The data is placed in a list of tuples.
+#Tuples were useful since they can sorted alphabetically, instead of by length. 
 
     for party in parties_list:
         str_party = str(party)
@@ -61,6 +68,8 @@ def count_by_Party():
     y = []
     ystr = []
     
+    #Since I wanted to print out the information before displaying it in a graph,
+    #that meant dealing with some formatting. 
     for tup in sorted_parties:
         if top < stop:
             percent = "{:.0%}".format(tup[0] / count)
@@ -102,18 +111,25 @@ def count_by_County():
     counties_dic = {}
     counties_list = []
 
+#Add the county to both the dictionary and the list. 
     for county in cur.execute(sqlstr):
         counties_dic[county[0]] = 0
         counties_list.append(county[0])
         
     sqlstr = '''SELECT Counties.name from Counties join Requests on Requests.county_id = Counties.id'''
 
+#Here we execute another cursor. 
+#When you encounter a county, add to that county's count in the dictionary. 
     for line in cur.execute(sqlstr):
         counties_dic[line[0]] = counties_dic[line[0]] + 1
 
     count = 0
 
     sorted_counties = []
+
+#Now, using that counties_list, we can easily iterate and grab the information from the dictionary.
+#The data is placed in a list of tuples.
+#Tuples were useful since they can sorted alphabetically, instead of by length. 
 
     for county in counties_list:
         str_county = str(county)
@@ -136,6 +152,8 @@ def count_by_County():
     y = []
     ystr = []
     
+    #Since I wanted to print out the information before displaying it in a graph,
+    #that meant dealing with some formatting. 
     for tup in sorted_counties:
         if top < stop:
             percent = "{:.0%}".format(tup[0] / count)
@@ -177,10 +195,13 @@ def count_by_Bracket():
 
     for bracket in cur.execute(sqlstr):
         str_bracket = bracket[0]
+#The following lines are little tricks to get the brackets in order.
         try:
             low_bound = int(str_bracket[0:2])
         except:
+#If this breaks it means the bracket is "Unknown".
             low_bound = 101
+#We're simplfying the order, to this should be one, not 18, to get in the right spot.
         if low_bound == 18:
             low_bound = 1
         if low_bound == 10:
@@ -205,6 +226,9 @@ def count_by_Bracket():
     y = []
     ystr = []
     
+#Since we have the brackets in order, we can now iterate over the list.
+#Having the bracket_order_dic let's us link that simplified ordered list
+#with the actual bracket names, now in the correct order. 
     for item in bracket_order:
         bracket = bracket_order_dic[item]
         records = bracket_dic[bracket]

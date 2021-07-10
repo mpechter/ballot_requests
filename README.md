@@ -1,2 +1,3 @@
-# ballot_requests
-Analysis of PA mail-in ballot requests.
+# Ballot_requests
+
+An analysis of PA mail-in ballot requests.

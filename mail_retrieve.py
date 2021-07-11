@@ -102,6 +102,7 @@ while count <= records:
             dob = dob[:4]
             int_dob = int(dob)
 
+        #If their DOB is 1800, that means their DOB is masked
             if int_dob == 1800:
                 bracket = 'Unknown'
 
@@ -110,6 +111,7 @@ while count <= records:
 
                 index = (age // 10) - 1
 
+        #If their age is over 100, keep the index at nine
                 if index > 9:
                     index = 9
 
